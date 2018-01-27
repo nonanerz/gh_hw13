@@ -6,7 +6,7 @@ import OutputComponent from './components/outputComponent/outputComponentContain
 class App extends Component {
   render () {
     return (
-      <div className='App'>
+      <div className='App container'>
         <FormComponent />
         <OutputComponent />
       </div>

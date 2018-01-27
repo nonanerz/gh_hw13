@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 export default class Test extends Component {
   render () {
-      console.log(this.props.show)
     return (
       <div>
           {this.props.show ?
