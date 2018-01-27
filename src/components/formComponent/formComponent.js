@@ -24,42 +24,53 @@ export default class Form extends Component {
     }
 
     changeName({target: {value}}) {
+        this.props.changeStateProps('show', false)
         this.setState({
             someUserName: value,
         })
     }
 
     changeEmail({target: {value}}) {
+        this.props.changeStateProps('show', false)
         this.setState({
             someUserEmail: value,
         })
     }
 
     changePhone({target: {value}}) {
+        this.props.changeStateProps('show', false)
         this.setState({
             someUserPhone: value,
         })
     }
 
     changeAddress({target: {value}}) {
+        this.props.changeStateProps('show', false)
         this.setState({
             someUserAddress: value,
         })
     }
 
     changePostcode({target: {value}}) {
+        this.props.changeStateProps('show', false)
         this.setState({
             someUserPostcode: value,
         })
     }
 
     changeDateOfBirth({target: {value}}) {
+        this.props.changeStateProps('show', false)
         this.setState({
             dateOfBirth: value,
         })
     }
 
     save() {
+        let isValid = true
+        if (this.state.someUserName.length < 5) {
+            console.log(this.name)
+            isValid = false
+        }
         this.props.changeStateProps('dateOfBirth', this.state.dateOfBirth)
         this.props.changeStateProps('postcode', this.state.someUserPostcode)
         this.props.changeStateProps('address', this.state.someUserAddress)
@@ -80,7 +91,7 @@ export default class Form extends Component {
     render() {
         return (
             <div>
-                <input placeholder="name" type='text' onChange={this.changeName} value={this.state.someUserName}/>
+                <input ref={elem => this.name = elem} placeholder="name" type='text' onChange={this.changeName} value={this.state.someUserName}/>
                 <input placeholder="email" type='text' onChange={this.changeEmail} value={this.state.someUserEmail}/>
                 <input placeholder="phone" type='text' onChange={this.changePhone} value={this.state.someUserPhone}/>
                 <input placeholder="address" type='text' onChange={this.changeAddress}
