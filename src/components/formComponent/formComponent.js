@@ -72,13 +72,12 @@ export default class Form extends Component {
     }
 
     validateEmail(email) {
-        let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     }
 
     save() {
         let errors = {}
-        let isValid = true
         if (this.state.someUserName.length === 0) {
             errors['nameError'] = 'This field should not be blank.'
         }
@@ -117,15 +116,18 @@ export default class Form extends Component {
         this.props.changeStateProps('phone', this.state.someUserPhone)
         this.props.changeStateProps('email', this.state.someUserEmail)
         this.props.changeStateProps('name', this.state.someUserName)
-        this.props.changeStateProps('show', true)
-        this.setState({
-            someUserName: '',
-            someUserEmail: '',
-            someUserPhone: '',
-            someUserAddress: '',
-            someUserPostcode: '',
-            dateOfBirth: null,
-        })
+        this.props.changeStateProps('show', !errors.hasOwnProperty())
+
+        if (!errors.hasOwnProperty()) {
+            this.setState({
+                someUserName: '',
+                someUserEmail: '',
+                someUserPhone: '',
+                someUserAddress: '',
+                someUserPostcode: '',
+                dateOfBirth: null,
+            })
+        }
     }
 
     render() {
@@ -134,7 +136,7 @@ export default class Form extends Component {
                 <div className="form-row">
                     <div className="col-md-6 mb-">
                         <label htmlFor="name">Name:</label>
-                        <input id="name" className="form-control is-invalid" ref={elem => this.name = elem} placeholder="name"
+                        <input id="name" className={`form-control ${this.state.errors.nameError ? "is-invalid" : null}`} ref={elem => this.name = elem} placeholder="name"
                                type='text' onChange={this.changeName} value={this.state.someUserName}/>
                         <div className="invalid-feedback">
                             {this.state.errors.nameError}
@@ -147,7 +149,7 @@ export default class Form extends Component {
                                 <span className="input-group-text">@</span>
                             </div>
 
-                            <input id="email" className="form-control is-invalid" placeholder="email" type='text'
+                            <input id="email" className={`form-control ${this.state.errors.emailError ? "is-invalid" : null}`} placeholder="email" type='text'
                                    onChange={this.changeEmail} value={this.state.someUserEmail}/>
                             <div className="invalid-feedback">
                                 {this.state.errors.emailError}
@@ -158,7 +160,7 @@ export default class Form extends Component {
                     <div className="col-md-6 mb-3">
                         <label htmlFor="phone">Phone:</label>
                         <input id="phone" placeholder="phone" type='text' onChange={this.changePhone}
-                               value={this.state.someUserPhone} className="form-control is-invalid"/>
+                               value={this.state.someUserPhone} className={`form-control ${this.state.errors.phoneError ? "is-invalid" : null}`}/>
 
                         <div className="invalid-feedback">
                             {this.state.errors.phoneError}
@@ -168,7 +170,7 @@ export default class Form extends Component {
 
                     <div className="col-md-3 mb-3">
                         <label htmlFor="address">Address:</label>
-                        <input id="address" className="form-control is-invalid" placeholder="address" type='text'
+                        <input id="address" className={`form-control ${this.state.errors.addressError ? "is-invalid" : null}`} placeholder="address" type='text'
                                onChange={this.changeAddress} value={this.state.someUserAddress}/>
                         <div className="invalid-feedback">
                             {this.state.errors.addressError}
@@ -177,14 +179,14 @@ export default class Form extends Component {
 
                     <div className="col-md-3 mb-3">
                         <label htmlFor="postcode">Postcode:</label>
-                        <input id="postcode" className="form-control is-invalid" placeholder="postcode" type='text'
+                        <input id="postcode" className={`form-control ${this.state.errors.postcodeError ? "is-invalid" : null}`} placeholder="postcode" type='text'
                                onChange={this.changePostcode} value={this.state.someUserPostcode}/>
 
                         <div className="invalid-feedback">
                             {this.state.errors.postcodeError}
                         </div>
                     </div>
-                    <div className="col-md-3 mb-3 is-invalid">
+                    <div className={`col-md-3 mb-3 ${this.state.errors.dateOfBirthError ? "is-invalid" : null}`}>
                         <label htmlFor="date">Date of Birth: </label>
                         <DayPickerInput
                             id="date"
