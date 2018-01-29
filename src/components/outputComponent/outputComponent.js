@@ -24,8 +24,8 @@ export default class Test extends Component {
                       <td>{this.props.someUserAddress}</td>
                   </tr>
                   <tr>
-                      <td>{this.props.someUserPostcode}</td>
                       <td>Postcode</td>
+                      <td>{this.props.someUserPostcode}</td>
                   </tr>
                   <tr>
                       <td>Date Of Birth</td>
