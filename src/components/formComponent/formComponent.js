@@ -77,36 +77,43 @@ export default class Form extends Component {
     }
 
     save() {
+        let isValid = true
         let errors = {}
         if (this.state.someUserName.length === 0) {
             errors['nameError'] = 'This field should not be blank.'
+            isValid = false
         }
         if (this.state.someUserEmail.length === 0) {
             errors['emailError'] = 'This field should not be blank.'
-
+            isValid = false
         } else if (!this.validateEmail(this.state.someUserEmail)) {
             errors['emailError'] = 'Please choose a valid email.'
-
+            isValid = false
         }
         if (this.state.someUserPhone) {
             if (this.state.someUserPhone.length < 8 || !this.state.someUserPhone.match(/\d/g)) {
                 errors['phoneError'] = 'Please provide a valid phone number.'
+                isValid = false
             }
         }
         if (this.state.someUserAddress) {
             if (this.state.someUserAddress.length < 8 || !this.state.someUserAddress.length > 100) {
                 errors['addressError'] = 'Min 8 characters, max 100'
+                isValid = false
             }
         }
 
         if (!this.state.someUserPostcode) {
             errors['postcodeError'] = 'This field should not be blank.'
+            isValid = false
         } else if (this.state.someUserPostcode.length < 2 || !this.state.someUserPostcode.length > 10) {
             errors['postcodeError'] = 'Min 2 characters, max 10'
+            isValid = false
         }
 
         if (!this.state.dateOfBirth && !this.state.dateOfBirth) {
             errors['dateOfBirthError'] = 'This field should not be blank.'
+            isValid = false
         }
         this.setState({errors})
 
@@ -116,9 +123,9 @@ export default class Form extends Component {
         this.props.changeStateProps('phone', this.state.someUserPhone)
         this.props.changeStateProps('email', this.state.someUserEmail)
         this.props.changeStateProps('name', this.state.someUserName)
-        this.props.changeStateProps('show', !errors.hasOwnProperty())
+        this.props.changeStateProps('show', isValid)
 
-        if (!errors.hasOwnProperty()) {
+        if (isValid) {
             this.setState({
                 someUserName: '',
                 someUserEmail: '',
