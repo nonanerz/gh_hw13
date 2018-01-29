@@ -3,12 +3,7 @@ import SecondComponent from './outputComponent'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    someUserName: state.main.name,
-    someUserEmail: state.main.email,
-    someUserPhone: state.main.phone,
-    someUserAddress: state.main.address,
-    someUserPostcode: state.main.postcode,
-    dateOfBirth: state.main.dateOfBirth,
+    user: state.main.user,
     show: state.main.show,
   }
 }
