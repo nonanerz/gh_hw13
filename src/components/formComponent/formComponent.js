@@ -7,11 +7,11 @@ export default class Form extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            someUserName: this.props.someUserName,
-            someUserEmail: this.props.someUserEmail,
-            someUserPhone: this.props.someUserPhone,
-            someUserAddress: this.props.someUserAddress,
-            someUserPostcode: this.props.someUserPostcode,
+            someUserName: this.props.someUserName ? this.props.someUserName : '',
+            someUserEmail: this.props.someUserEmail ? this.props.someUserEmail : '',
+            someUserPhone: this.props.someUserPhone ? this.props.someUserPhone : '',
+            someUserAddress: this.props.someUserAddress ? this.props.someUserAddress : '',
+            someUserPostcode: this.props.someUserPostcode ? this.props.someUserPostcode : '',
             dateOfBirth: this.props.dateOfBirth,
             errors: {},
             startDate: moment()
@@ -69,7 +69,7 @@ export default class Form extends Component {
     changeDateOfBirth(dateOfBirth) {
         this.props.changeStateProps('show', false)
         this.setState({
-            dateOfBirth: dateOfBirth.toString(),
+            dateOfBirth: dateOfBirth ? dateOfBirth.toString() : '',
             startDate: dateOfBirth
         })
     }
