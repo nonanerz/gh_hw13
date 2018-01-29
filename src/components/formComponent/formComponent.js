@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
-import DayPickerInput from 'react-day-picker/DayPickerInput'
-import 'react-day-picker/lib/style.css'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
+import 'react-datepicker/dist/react-datepicker-cssmodules.css'
 
 export default class Form extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ export default class Form extends Component {
             someUserAddress: this.props.someUserAddress,
             someUserPostcode: this.props.someUserPostcode,
             dateOfBirth: this.props.dateOfBirth,
-            errors: {}
+            errors: {},
+            startDate: moment()
         }
 
         this.changeName = this.changeName.bind(this)
@@ -68,6 +70,7 @@ export default class Form extends Component {
         this.props.changeStateProps('show', false)
         this.setState({
             dateOfBirth: dateOfBirth.toString(),
+            startDate: dateOfBirth
         })
     }
 
@@ -156,7 +159,9 @@ export default class Form extends Component {
                     <div className="col-md-6 mb-">
                         <label htmlFor="name">Name:</label>
                         <input id="name" className={`form-control ${this.state.errors.nameError ? "is-invalid" : null}`} ref={elem => this.name = elem} placeholder="name"
-                               type='text' onChange={this.changeName} value={this.state.someUserName}/>
+                               type='text' onChange={this.changeName} value={this.state.someUserName}
+                               disabled={this.props.show}
+                        />
                         <div className="invalid-feedback">
                             {this.state.errors.nameError}
                         </div>
@@ -169,7 +174,9 @@ export default class Form extends Component {
                             </div>
 
                             <input id="email" className={`form-control ${this.state.errors.emailError ? "is-invalid" : null}`} placeholder="email" type='text'
-                                   onChange={this.changeEmail} value={this.state.someUserEmail}/>
+                                   onChange={this.changeEmail} value={this.state.someUserEmail}
+                                   disabled={this.props.show}
+                            />
                             <div className="invalid-feedback">
                                 {this.state.errors.emailError}
                             </div>
@@ -179,7 +186,9 @@ export default class Form extends Component {
                     <div className="col-md-6 mb-3">
                         <label htmlFor="phone">Phone:</label>
                         <input id="phone" placeholder="phone" type='text' onChange={this.changePhone}
-                               value={this.state.someUserPhone} className={`form-control ${this.state.errors.phoneError ? "is-invalid" : null}`}/>
+                               value={this.state.someUserPhone} className={`form-control ${this.state.errors.phoneError ? "is-invalid" : null}`}
+                               disabled={this.props.show}
+                        />
 
                         <div className="invalid-feedback">
                             {this.state.errors.phoneError}
@@ -190,7 +199,9 @@ export default class Form extends Component {
                     <div className="col-md-3 mb-3">
                         <label htmlFor="address">Address:</label>
                         <input id="address" className={`form-control ${this.state.errors.addressError ? "is-invalid" : null}`} placeholder="address" type='text'
-                               onChange={this.changeAddress} value={this.state.someUserAddress}/>
+                               onChange={this.changeAddress} value={this.state.someUserAddress}
+                               disabled={this.props.show}
+                        />
                         <div className="invalid-feedback">
                             {this.state.errors.addressError}
                         </div>
@@ -199,7 +210,9 @@ export default class Form extends Component {
                     <div className="col-md-3 mb-3">
                         <label htmlFor="postcode">Postcode:</label>
                         <input id="postcode" className={`form-control ${this.state.errors.postcodeError ? "is-invalid" : null}`} placeholder="postcode" type='text'
-                               onChange={this.changePostcode} value={this.state.someUserPostcode}/>
+                               onChange={this.changePostcode} value={this.state.someUserPostcode}
+                               disabled={this.props.show}
+                        />
 
                         <div className="invalid-feedback">
                             {this.state.errors.postcodeError}
@@ -207,9 +220,10 @@ export default class Form extends Component {
                     </div>
                     <div className={`col-md-3 mb-3 ${this.state.errors.dateOfBirthError ? "is-invalid" : null}`}>
                         <label htmlFor="date">Date of Birth: </label>
-                        <DayPickerInput
-                            id="date"
-                            onDayChange={date => this.changeDateOfBirth(date)}
+                        <DatePicker
+                            selected={this.state.startDate}
+                            onChange={this.changeDateOfBirth}
+                            disabled={this.props.show}
                         />
                         <div className="text-danger">
                             {this.state.errors.dateOfBirthError ? this.state.errors.dateOfBirthError : ''}
