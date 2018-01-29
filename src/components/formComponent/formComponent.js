@@ -77,6 +77,18 @@ export default class Form extends Component {
     }
 
     save() {
+        if (this.props.show) {
+            this.setState({
+                someUserName: this.props.someUserName,
+                someUserEmail: this.props.someUserEmail,
+                someUserPhone: this.props.someUserPhone,
+                someUserAddress: this.props.someUserAddress,
+                someUserPostcode: this.props.someUserPostcode,
+                dateOfBirth: this.props.dateOfBirth,
+                errors: {}
+            }, () => this.props.changeStateProps('show', false))
+            return
+        }
         let isValid = true
         let errors = {}
         if (this.state.someUserName.length === 0) {
@@ -204,7 +216,7 @@ export default class Form extends Component {
                         </div>
                     </div>
                 </div>
-                <button className="btn btn-primary" onClick={this.save}>Save</button>
+                <button className="btn btn-primary" onClick={this.save}>{`${this.props.show ? "Edit" : "Save"}`}</button>
             </div>
         )
     }

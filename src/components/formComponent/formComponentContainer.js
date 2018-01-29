@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => {
         someUserAddress: state.main.address,
         someUserPostcode: state.main.postcode,
         dateOfBirth: state.main.dateOfBirth,
+        show: state.main.show,
         ...ownProps
     }
 }
